@@ -28,7 +28,7 @@ public class ServiciosClienteImpl implements ServiciosCliente {
 			var rs = pstmt.executeQuery();
 			if (rs.next()) {
 				Cliente cliente = new Cliente.Builder().idCliente(rs.getInt("idCli"))
-						.direccionCli(rs.getString("direccionCli")).telefono(rs.getString("telefonoCli"))
+						.direccionCli(rs.getString("direccionCli")).telefonoCli(rs.getString("telefonoCli"))
 						.idPersona(rs.getInt("idPer")).nombrePer(rs.getString("nombrePer"))
 						.cedulaPer(rs.getString("cedulaPer")).correo(rs.getString("correoPer")).build();
 				return cliente;
@@ -51,7 +51,7 @@ public class ServiciosClienteImpl implements ServiciosCliente {
 			var rs = pstmt.executeQuery();
 			while (rs.next()) {
 				Cliente cliente = new Cliente.Builder().idCliente(rs.getInt("idCli"))
-						.direccionCli(rs.getString("direccionCli")).telefono(rs.getString("telefonoCli"))
+						.direccionCli(rs.getString("direccionCli")).telefonoCli(rs.getString("telefonoCli"))
 						.idPersona(rs.getInt("idPer")).nombrePer(rs.getString("nombrePer"))
 						.cedulaPer(rs.getString("cedulaPer")).correo(rs.getString("correoPer")).build();
 				ret.add(cliente);

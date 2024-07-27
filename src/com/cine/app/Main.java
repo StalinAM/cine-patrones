@@ -3,24 +3,27 @@ package com.cine.app;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.hamcrest.Factory;
+
 import com.cine.bean.Cliente;
 import com.cine.bean.Empleado;
+import com.cine.bean.Persona;
 import com.cine.conexionBaseDatos.BaseDatosConexion;
+import com.cine.intancias.FactoryImpl;
+import com.cine.intancias.PersonaBuilder;
+import com.cine.intancias.TipoPersona;
 import com.cine.servicios.ServiciosEmpleado;
 import com.manager.gui.ServiciosEmpleadoImpl;
 
 public class Main {
-    public static void main(String[] args) {
-    	Cliente nuevoCliente = new Cliente.Builder()
-              .nombrePer("Juan Perez")
-              .cedulaPer("123456789")
-              .correo("juan.perez@example.com")
-              .telefono("1234567890")
-              .direccionCli("Calle Falsa 123")
-              .build();
-    	;
-    	System.out.println(nuevoCliente.getCedulaPer());
-    	
+	public static void main(String[] args) {
+		FactoryImpl fact = new FactoryImpl();
+
+		Persona nuevoCliente = fact.crearPersona(TipoPersona.CLIENTE,
+				new Cliente.Builder().nombrePer("Juan Perez").cedulaPer("123456789").correo("juan.perez@example.com")
+						.telefonoCli("1234567890").direccionCli("Calle Falsa 123"));
+		System.out.println(nuevoCliente);
+
 //    	 try {
 //             // Configuración de la base de datos
 //             BaseDatosConexion dbConfig = BaseDatosConexion.getInstance();
@@ -75,7 +78,6 @@ public class Main {
 //             System.err.println("Ocurrió un error: " + ex.getMessage());
 //         }
 
-    	
 //        try {
 //            // Configuración de la base de datos
 //            BaseDatosConexion dbConfig = BaseDatosConexion.getInstance();
@@ -135,5 +137,5 @@ public class Main {
 //        } catch (Exception ex) {
 //            System.err.println("Ocurrió un error: " + ex.getMessage());
 //        }
-    }
+	}
 }

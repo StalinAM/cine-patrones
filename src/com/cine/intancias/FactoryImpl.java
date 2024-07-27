@@ -6,9 +6,9 @@ import com.cine.bean.Persona;
 
 public class FactoryImpl {
 
-	public Persona crearProducto(TipoPersona tipoProducto, PersonaBuilder builder) {
+	public Persona crearPersona(TipoPersona tipoPersona, PersonaBuilder builder) {
 
-		switch (tipoProducto) {
+		switch (tipoPersona) {
 		case CLIENTE:
 			return ((Cliente.Builder) builder).build();
 		case EMPLEADO:

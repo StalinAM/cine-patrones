@@ -55,7 +55,7 @@ public class Cliente extends Persona {
 			return this;
 		}
 
-		public Builder telefono(String telefonoCli) {
+		public Builder telefonoCli(String telefonoCli) {
 			this.telefonoCli = telefonoCli;
 			return this;
 		}
@@ -77,7 +77,7 @@ public class Cliente extends Persona {
 
 	@Override
 	public String toString() {
-		return "Cliente [idCliente=" + idCliente + ", direccionCli=" + direccionCli + ", telefonoCli=" + telefonoCli
+		return super.toString()+" Cliente [idCliente=" + idCliente + ", direccionCli=" + direccionCli + ", telefonoCli=" + telefonoCli
 				+ "]";
 	}
 }
