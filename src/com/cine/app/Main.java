@@ -12,6 +12,8 @@ import com.cine.conexionBaseDatos.BaseDatosConexion;
 import com.cine.intancias.FactoryImpl;
 import com.cine.intancias.PersonaBuilder;
 import com.cine.intancias.TipoPersona;
+import com.cine.servicios.ServicioSalaImpl;
+import com.cine.servicios.ServiciosClienteImpl;
 import com.cine.servicios.ServiciosEmpleado;
 import com.cine.servicios.ServiciosEmpleadoImpl;
 
@@ -31,7 +33,7 @@ public class Main {
 		BaseDatosConexion dbConfig = BaseDatosConexion.getInstance();
 
 		// Implementación del servicio
-		ServiciosEmpleadoImpl servicioCliente = new ServiciosEmpleadoImpl();
+		ServicioSalaImpl servicioCliente = new ServicioSalaImpl();
 		servicioCliente.setDbConfig(dbConfig);
 		System.out.println(servicioCliente.listarTodos());
 

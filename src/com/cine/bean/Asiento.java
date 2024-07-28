@@ -23,6 +23,10 @@ public class Asiento implements State {
 		this.state = state;
 	}
 
+	public State getState() {
+		return state;
+	}
+
 	public ImageIcon getIconDisponible() {
 		return iconDisponible;
 	}
@@ -33,10 +37,6 @@ public class Asiento implements State {
 
 	public ImageIcon getIconOcupado() {
 		return iconOcupado;
-	}
-
-	public State getState() {
-		return state;
 	}
 
 	@Override

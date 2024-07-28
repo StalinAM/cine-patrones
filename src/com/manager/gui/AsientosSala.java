@@ -186,6 +186,7 @@ public class AsientosSala extends JFrame {
 		final ImageIcon iconSelec = new ImageIcon(AsientosSala.class.getResource("/resources/silla_azul.png"));
 		Image imgSelec = iconSelec.getImage().getScaledInstance(buttonWidth, buttonHeight, Image.SCALE_SMOOTH);
 		final ImageIcon redimensionarSelec = new ImageIcon(imgSelec);
+
 		asientos = new ArrayList<>();
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 12; j++) {
@@ -197,9 +198,11 @@ public class AsientosSala extends JFrame {
 				btnNewButton.setOpaque(false);
 				final int index = i * 12 + j;
 				btnNewButton.addMouseListener(new MouseAdapter() {
+					Asiento asiento = null;
+
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						Asiento asiento = asientos.get(index);
+						asiento = asientos.get(index);
 						asiento.handle(asiento, btnNewButton);
 						if (asiento.getState() instanceof AsientoSeleccionado) {
 							btnNewButton.setIcon(redimensionarSelec);

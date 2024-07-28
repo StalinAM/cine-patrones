@@ -5,7 +5,7 @@ import javax.swing.JButton;
 
 import com.cine.bean.Asiento;
 
-public class AsientoSeleccionado implements State {
+public class AsientoSeleccionado implements State{
 	private ImageIcon iconSeleccionado;
 
 	public AsientoSeleccionado(ImageIcon iconSeleccionado) {
