@@ -1,4 +1,4 @@
-package com.manager.gui;
+package com.cine.servicios;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -7,13 +7,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cine.bean.Empleado;
-import com.cine.bean.Empleado.Builder;
+import com.cine.bean.Persona;
 import com.cine.conexionBaseDatos.BaseDatosConexion;
-import com.cine.servicios.ServiciosEmpleado;
+import com.cine.intancias.FactoryImpl;
+import com.cine.intancias.TipoPersona;
 
 public class ServiciosEmpleadoImpl implements ServiciosEmpleado {
 
 	private BaseDatosConexion dbConfig;
+	FactoryImpl fact = new FactoryImpl();
+	Persona persona;
 
 	@Override
 	public void setDbConfig(BaseDatosConexion dbConfig) {
@@ -21,7 +24,7 @@ public class ServiciosEmpleadoImpl implements ServiciosEmpleado {
 	}
 
 	@Override
-	public Empleado buscarPorId(Integer id) {
+	public Persona buscarPorId(Integer id) {
 		try (var con = dbConfig.getConnection()) {
 			var pstmt = con.prepareStatement(
 					"SELECT e.idEmp, e.cargoEmp, e.cuentaBancariaEmp, e.usuarioEmp, e.contraseniaEmp, "
@@ -30,12 +33,13 @@ public class ServiciosEmpleadoImpl implements ServiciosEmpleado {
 			pstmt.setInt(1, id);
 			var rs = pstmt.executeQuery();
 			if (rs.next()) {
-				Empleado empleado = new Empleado.Builder().idEmpleado(rs.getInt("idEmp"))
-						.cargoEmpl(rs.getString("cargoEmp")).cuentaBancariaEmpl(rs.getString("cuentaBancariaEmp"))
-						.usuarioEmpl(rs.getString("usuarioEmp")).contraseniaEmpl(rs.getString("contraseniaEmp"))
-						.idPersona(rs.getInt("idPer")).nombrePer(rs.getString("nombrePer"))
-						.cedulaPer(rs.getString("cedulaPer")).correo(rs.getString("correoPer")).build();
-				return empleado;
+				persona = fact.crearPersona(TipoPersona.EMPLEADO,
+						new Empleado.Builder().idEmpleado(rs.getInt("idEmp")).cargoEmpl(rs.getString("cargoEmp"))
+								.cuentaBancariaEmpl(rs.getString("cuentaBancariaEmp"))
+								.usuarioEmpl(rs.getString("usuarioEmp")).contraseniaEmpl(rs.getString("contraseniaEmp"))
+								.idPersona(rs.getInt("idPer")).nombrePer(rs.getString("nombrePer"))
+								.cedulaPer(rs.getString("cedulaPer")).correo(rs.getString("correoPer")));
+				return persona;
 			}
 			return null;
 		} catch (Exception ex) {
@@ -44,8 +48,8 @@ public class ServiciosEmpleadoImpl implements ServiciosEmpleado {
 	}
 
 	@Override
-	public List<Empleado> listarTodos() {
-		List<Empleado> ret = new ArrayList<>();
+	public List<Persona> listarTodos() {
+		List<Persona> ret = new ArrayList<>();
 		Connection con = null;
 		try {
 			con = dbConfig.getConnection();
@@ -55,12 +59,13 @@ public class ServiciosEmpleadoImpl implements ServiciosEmpleado {
 							+ "JOIN Persona p ON e.idPer = p.idPer " + "ORDER BY e.idEmp");
 			var rs = pstmt.executeQuery();
 			while (rs.next()) {
-				Empleado empleado = new Empleado.Builder().idEmpleado(rs.getInt("idEmp"))
-						.cargoEmpl(rs.getString("cargoEmp")).cuentaBancariaEmpl(rs.getString("cuentaBancariaEmp"))
-						.usuarioEmpl(rs.getString("usuarioEmp")).contraseniaEmpl(rs.getString("contraseniaEmp"))
-						.idPersona(rs.getInt("idPer")).nombrePer(rs.getString("nombrePer"))
-						.cedulaPer(rs.getString("cedulaPer")).correo(rs.getString("correoPer")).build();
-				ret.add(empleado);
+				persona = fact.crearPersona(TipoPersona.EMPLEADO,
+						new Empleado.Builder().idEmpleado(rs.getInt("idEmp")).cargoEmpl(rs.getString("cargoEmp"))
+								.cuentaBancariaEmpl(rs.getString("cuentaBancariaEmp"))
+								.usuarioEmpl(rs.getString("usuarioEmp")).contraseniaEmpl(rs.getString("contraseniaEmp"))
+								.idPersona(rs.getInt("idPer")).nombrePer(rs.getString("nombrePer"))
+								.cedulaPer(rs.getString("cedulaPer")).correo(rs.getString("correoPer")));
+				ret.add(persona);
 			}
 		} catch (Exception ex) {
 			throw new RuntimeException(ex);
@@ -77,7 +82,7 @@ public class ServiciosEmpleadoImpl implements ServiciosEmpleado {
 	}
 
 	@Override
-	public void crear(Empleado empleado) {
+	public void crear(Persona empleado) {
 		Connection con = null;
 		try {
 			con = dbConfig.getConnection();
@@ -104,10 +109,10 @@ public class ServiciosEmpleadoImpl implements ServiciosEmpleado {
 					"INSERT INTO Empleado (idPer, cargoEmp, cuentaBancariaEmp, usuarioEmp, contraseniaEmp) VALUES (?, ?, ?, ?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
 			pstmtEmpleado.setInt(1, idPer);
-			pstmtEmpleado.setString(2, empleado.getCargoEmpl());
-			pstmtEmpleado.setString(3, empleado.getCuentaBancariaEmpl());
-			pstmtEmpleado.setString(4, empleado.getUsuarioEmpl());
-			pstmtEmpleado.setString(5, empleado.getContraseniaEmpl());
+			pstmtEmpleado.setString(2, ((Empleado) empleado).getCargoEmpl());
+			pstmtEmpleado.setString(3, ((Empleado) empleado).getCuentaBancariaEmpl());
+			pstmtEmpleado.setString(4, ((Empleado) empleado).getUsuarioEmpl());
+			pstmtEmpleado.setString(5, ((Empleado) empleado).getContraseniaEmpl());
 			pstmtEmpleado.executeUpdate();
 
 			con.commit(); // Commit transaction
@@ -133,7 +138,7 @@ public class ServiciosEmpleadoImpl implements ServiciosEmpleado {
 	}
 
 	@Override
-	public void actualizar(Empleado obj) {
+	public void actualizar(Persona obj) {
 		System.out.println(obj);
 		Connection con = null;
 		try {
@@ -141,22 +146,22 @@ public class ServiciosEmpleadoImpl implements ServiciosEmpleado {
 			con.setAutoCommit(false); // Start transaction
 
 			// Update Persona
-			var pstmtPersona = con
-					.prepareStatement("UPDATE Persona SET nombrePer = ?, cedulaPer = ?, correoPer = ? WHERE idPer = (SELECT idPer from Empleado where Empleado.idEmp = ?)");
+			var pstmtPersona = con.prepareStatement(
+					"UPDATE Persona SET nombrePer = ?, cedulaPer = ?, correoPer = ? WHERE idPer = (SELECT idPer from Empleado where Empleado.idEmp = ?)");
 			pstmtPersona.setString(1, obj.getNombrePer());
 			pstmtPersona.setString(2, obj.getCedulaPer());
 			pstmtPersona.setString(3, obj.getCorreo());
-			pstmtPersona.setInt(4, obj.getIdEmpleado());
+			pstmtPersona.setInt(4, ((Empleado) obj).getIdEmpleado());
 			pstmtPersona.executeUpdate();
 
 			// Update Empleado
 			var pstmtEmpleado = con.prepareStatement(
 					"UPDATE Empleado SET cargoEmp = ?, cuentaBancariaEmp = ?, usuarioEmp = ?, contraseniaEmp = ? WHERE idEmp = ?");
-			pstmtEmpleado.setString(1, obj.getCargoEmpl());
-			pstmtEmpleado.setString(2, obj.getCuentaBancariaEmpl());
-			pstmtEmpleado.setString(3, obj.getUsuarioEmpl());
-			pstmtEmpleado.setString(4, obj.getContraseniaEmpl());
-			pstmtEmpleado.setInt(5, obj.getIdEmpleado());
+			pstmtEmpleado.setString(1, ((Empleado) obj).getCargoEmpl());
+			pstmtEmpleado.setString(2, ((Empleado) obj).getCuentaBancariaEmpl());
+			pstmtEmpleado.setString(3, ((Empleado) obj).getUsuarioEmpl());
+			pstmtEmpleado.setString(4, ((Empleado) obj).getContraseniaEmpl());
+			pstmtEmpleado.setInt(5, ((Empleado) obj).getIdEmpleado());
 			pstmtEmpleado.executeUpdate();
 
 			con.commit(); // Commit transaction
@@ -182,7 +187,7 @@ public class ServiciosEmpleadoImpl implements ServiciosEmpleado {
 	}
 
 	@Override
-	public void eliminarPorId(Integer id) {
+	public void eliminarPorId(int id) {
 		Connection con = null;
 		try {
 			con = dbConfig.getConnection();

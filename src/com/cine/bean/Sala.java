@@ -1,73 +1,54 @@
 package com.cine.bean;
 
 public class Sala {
-    private int idSala;
-    private String nombreSala;
-    private int capacidadColumnaSala;
-    private int capacidadFilaSala;
+	private int idSala;
+	private String nombreSala;
+	private int capacidadColumnaSala;
+	private int capacidadFilaSala;
 
-    // Getters y Setters
-    public int getIdSala() {
-        return idSala;
-    }
+	public Sala(int idSala, String nombreSala, int capacidadColumnaSala, int capacidadFilaSala) {
+		this.idSala = idSala;
+		this.nombreSala = nombreSala;
+		this.capacidadColumnaSala = capacidadColumnaSala;
+		this.capacidadFilaSala = capacidadFilaSala;
+	}
 
-    public String getNombreSala() {
-        return nombreSala;
-    }
+	public int getIdSala() {
+		return idSala;
+	}
 
-    public int getCapacidadColumnaSala() {
-        return capacidadColumnaSala;
-    }
+	public void setIdSala(int idSala) {
+		this.idSala = idSala;
+	}
 
-    public int getCapacidadFilaSala() {
-        return capacidadFilaSala;
-    }
+	public String getNombreSala() {
+		return nombreSala;
+	}
 
-    private Sala(Builder builder) {
-        this.idSala = builder.idSala;
-        this.nombreSala = builder.nombreSala;
-        this.capacidadColumnaSala = builder.capacidadColumnaSala;
-        this.capacidadFilaSala = builder.capacidadFilaSala;
-    }
+	public void setNombreSala(String nombreSala) {
+		this.nombreSala = nombreSala;
+	}
 
-    public static class Builder {
-        private int idSala;
-        private String nombreSala;
-        private int capacidadColumnaSala;
-        private int capacidadFilaSala;
+	public int getCapacidadColumnaSala() {
+		return capacidadColumnaSala;
+	}
 
-        public Builder idSala(int idSala) {
-            this.idSala = idSala;
-            return this;
-        }
+	public void setCapacidadColumnaSala(int capacidadColumnaSala) {
+		this.capacidadColumnaSala = capacidadColumnaSala;
+	}
 
-        public Builder nombreSala(String nombreSala) {
-            this.nombreSala = nombreSala;
-            return this;
-        }
+	public int getCapacidadFilaSala() {
+		return capacidadFilaSala;
+	}
 
-        public Builder capacidadColumnaSala(int capacidadColumnaSala) {
-            this.capacidadColumnaSala = capacidadColumnaSala;
-            return this;
-        }
+	public void setCapacidadFilaSala(int capacidadFilaSala) {
+		this.capacidadFilaSala = capacidadFilaSala;
+	}
 
-        public Builder capacidadFilaSala(int capacidadFilaSala) {
-            this.capacidadFilaSala = capacidadFilaSala;
-            return this;
-        }
+	@Override
+	public String toString() {
+		return "Sala [idSala=" + idSala + ", nombreSala=" + nombreSala + ", capacidadColumnaSala="
+				+ capacidadColumnaSala + ", capacidadFilaSala=" + capacidadFilaSala + "]";
+	}
 
-        public Sala build() {
-            return new Sala(this);
-        }
-    }
-
-    @Override
-    public String toString() {
-        return "Sala{" +
-                "idSala=" + idSala +
-                ", nombreSala='" + nombreSala + '\'' +
-                ", capacidadColumnaSala=" + capacidadColumnaSala +
-                ", capacidadFilaSala=" + capacidadFilaSala +
-                '}';
-    }
 }

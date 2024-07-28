@@ -10,10 +10,10 @@ public interface ServiciosEmpleado {
 public void setDbConfig(BaseDatosConexion dbConfig);
 	
 	//CRUD
-	public Empleado buscarPorId(Integer id);//C
-	public List<Empleado> listarTodos();//R
-	public void crear (Empleado obj);//R
-	public void actualizar (Empleado obj);//U
-	public void eliminarPorId(Integer id);//D
+	public Persona buscarPorId(Integer id);//C
+	public List<Persona> listarTodos();//R
+	public void crear (Persona obj);//R
+	public void actualizar (Persona obj);//U
+	public void eliminarPorId(int id);//D
 
 }

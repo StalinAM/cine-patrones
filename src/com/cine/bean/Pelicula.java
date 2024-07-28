@@ -1,86 +1,65 @@
 package com.cine.bean;
 
 public class Pelicula {
-    private int idPelicula;
-    private String nombrePel;
-    private String sinopsisPel;
-    private char categoriaPel;
-    private String idiomaPel;
+	private int idPelicula;
+	private String nombrePel;
+	private String sinopsisPel;
+	private char categoriaPel;
+	private String idiomaPel;
 
-    // Getters y Setters
-    public int getIdPelicula() {
-        return idPelicula;
-    }
-    
-    public String getNombrePel() {
-        return nombrePel;
-    }
+	public Pelicula(int idPelicula, String nombrePel, String sinopsisPel, char categoriaPel, String idiomaPel) {
+		super();
+		this.idPelicula = idPelicula;
+		this.nombrePel = nombrePel;
+		this.sinopsisPel = sinopsisPel;
+		this.categoriaPel = categoriaPel;
+		this.idiomaPel = idiomaPel;
+	}
 
-    public String getSinopsisPel() {
-        return sinopsisPel;
-    }
+	public int getIdPelicula() {
+		return idPelicula;
+	}
 
-    public char getCategoriaPel() {
-        return categoriaPel;
-    }
+	public void setIdPelicula(int idPelicula) {
+		this.idPelicula = idPelicula;
+	}
 
-    public String getIdiomaPel() {
-        return idiomaPel;
-    }
+	public String getNombrePel() {
+		return nombrePel;
+	}
 
-    private Pelicula(Builder builder) {
-        this.idPelicula = builder.idPelicula;
-        this.nombrePel = builder.nombrePel;
-        this.sinopsisPel = builder.sinopsisPel;
-        this.categoriaPel = builder.categoriaPel;
-        this.idiomaPel = builder.idiomaPel;
-    }
+	public void setNombrePel(String nombrePel) {
+		this.nombrePel = nombrePel;
+	}
 
-    public static class Builder {
-        private int idPelicula;
-        private String nombrePel;
-        private String sinopsisPel;
-        private char categoriaPel;
-        private String idiomaPel;
+	public String getSinopsisPel() {
+		return sinopsisPel;
+	}
 
-        public Builder idPelicula(int idPelicula) {
-            this.idPelicula = idPelicula;
-            return this;
-        }
+	public void setSinopsisPel(String sinopsisPel) {
+		this.sinopsisPel = sinopsisPel;
+	}
 
-        public Builder nombrePel(String nombrePel) {
-            this.nombrePel = nombrePel;
-            return this;
-        }
+	public char getCategoriaPel() {
+		return categoriaPel;
+	}
 
-        public Builder sinopsisPel(String sinopsisPel) {
-            this.sinopsisPel = sinopsisPel;
-            return this;
-        }
+	public void setCategoriaPel(char categoriaPel) {
+		this.categoriaPel = categoriaPel;
+	}
 
-        public Builder categoriaPel(char categoriaPel) {
-            this.categoriaPel = categoriaPel;
-            return this;
-        }
+	public String getIdiomaPel() {
+		return idiomaPel;
+	}
 
-        public Builder idiomaPel(String idiomaPel) {
-            this.idiomaPel = idiomaPel;
-            return this;
-        }
+	public void setIdiomaPel(String idiomaPel) {
+		this.idiomaPel = idiomaPel;
+	}
 
-        public Pelicula build() {
-            return new Pelicula(this);
-        }
-    }
+	@Override
+	public String toString() {
+		return "Pelicula [idPelicula=" + idPelicula + ", nombrePel=" + nombrePel + ", sinopsisPel=" + sinopsisPel
+				+ ", categoriaPel=" + categoriaPel + ", idiomaPel=" + idiomaPel + "]";
+	}
 
-    @Override
-    public String toString() {
-        return "Pelicula{" +
-                "idPelicula=" + idPelicula +
-                ", nombrePel='" + nombrePel + '\'' +
-                ", sinopsisPel='" + sinopsisPel + '\'' +
-                ", categoriaPel=" + categoriaPel +
-                ", idiomaPel='" + idiomaPel + '\'' +
-                '}';
-    }
 }

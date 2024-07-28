@@ -22,7 +22,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import com.cine.bean.Empleado;
+import com.cine.bean.Persona;
 import com.cine.conexionBaseDatos.BaseDatosConexion;
+import com.cine.intancias.FactoryImpl;
+import com.cine.intancias.TipoPersona;
+import com.cine.servicios.ServiciosEmpleadoImpl;
 
 import java.util.List;
 
@@ -40,6 +44,8 @@ public class AddEmpl extends JFrame {
 	private JTextField textFieldContrasenia;
 	private JTable table;
 	private ServiciosEmpleadoImpl serviciosEmpleado;
+	FactoryImpl fact = new FactoryImpl();
+	Persona persona = null;
 
 	/**
 	 * Launch the application.
@@ -273,13 +279,12 @@ public class AddEmpl extends JFrame {
 	private void cargarEmpleados() {
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		model.setRowCount(0);
-		List<Empleado> empleados = serviciosEmpleado.listarTodos();
-		for (Empleado empleado : empleados) {
-
-			System.out.println("GUI" + empleado);
-			model.addRow(new Object[] { empleado.getIdEmpleado(), empleado.getNombrePer(), empleado.getCedulaPer(),
-					empleado.getCorreo(), empleado.getCargoEmpl(), empleado.getCuentaBancariaEmpl(),
-					empleado.getUsuarioEmpl(), empleado.getContraseniaEmpl() });
+		List<Persona> empleados = serviciosEmpleado.listarTodos();
+		for (Persona empleado : empleados) {
+			model.addRow(new Object[] { ((Empleado) empleado).getIdEmpleado(), empleado.getNombrePer(),
+					empleado.getCedulaPer(), empleado.getCorreo(), ((Empleado) empleado).getCargoEmpl(),
+					((Empleado) empleado).getCuentaBancariaEmpl(), ((Empleado) empleado).getUsuarioEmpl(),
+					((Empleado) empleado).getContraseniaEmpl() });
 		}
 	}
 
@@ -292,11 +297,11 @@ public class AddEmpl extends JFrame {
 		String usuario = textFieldUsuario.getText();
 		String contrasenia = textFieldContrasenia.getText();
 
-		Empleado empleado = new Empleado.Builder().nombrePer(nombre).cedulaPer(cedula).correo(correo).cargoEmpl(cargo)
-				.cuentaBancariaEmpl(cuentaBancaria).usuarioEmpl(usuario).contraseniaEmpl(contrasenia).build();
+		persona = fact.crearPersona(TipoPersona.EMPLEADO,
+				new Empleado.Builder().nombrePer(nombre).cedulaPer(cedula).correo(correo).cargoEmpl(cargo)
+						.cuentaBancariaEmpl(cuentaBancaria).usuarioEmpl(usuario).contraseniaEmpl(contrasenia));
 
-		serviciosEmpleado.crear(empleado);
-		;
+		serviciosEmpleado.crear(persona);
 		cargarEmpleados();
 		limpiarCampos();
 	}
@@ -311,11 +316,12 @@ public class AddEmpl extends JFrame {
 		String usuario = textFieldUsuario.getText();
 		String contrasenia = textFieldContrasenia.getText();
 
-		Empleado empleado = new Empleado.Builder().idEmpleado(id).nombrePer(nombre).cedulaPer(cedula).correo(correo)
-				.cargoEmpl(cargo).cuentaBancariaEmpl(cuentaBancaria).usuarioEmpl(usuario).contraseniaEmpl(contrasenia)
-				.build();
+		persona = fact.crearPersona(TipoPersona.EMPLEADO,
+				new Empleado.Builder().idEmpleado(id).nombrePer(nombre).cedulaPer(cedula).correo(correo)
+						.cargoEmpl(cargo).cuentaBancariaEmpl(cuentaBancaria).usuarioEmpl(usuario)
+						.contraseniaEmpl(contrasenia));
 
-		serviciosEmpleado.actualizar(empleado);
+		serviciosEmpleado.actualizar(persona);
 		cargarEmpleados();
 		limpiarCampos();
 	}

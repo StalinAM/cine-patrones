@@ -13,24 +13,31 @@ import com.cine.intancias.FactoryImpl;
 import com.cine.intancias.PersonaBuilder;
 import com.cine.intancias.TipoPersona;
 import com.cine.servicios.ServiciosEmpleado;
-import com.manager.gui.ServiciosEmpleadoImpl;
+import com.cine.servicios.ServiciosEmpleadoImpl;
 
 public class Main {
-	public static void main(String[] args) {
-		FactoryImpl fact = new FactoryImpl();
+	public static void main(String[] args) throws SQLException {
+//		FactoryImpl fact = new FactoryImpl();
+//
+//		Persona nuevoCliente = fact.crearPersona(TipoPersona.CLIENTE,
+//				new Cliente.Builder().nombrePer("Juan Perez").cedulaPer("123456789").correo("juan.perez@example.com")
+//						.telefonoCli("1234567890").direccionCli("Calle Falsa 123"));
+//		System.out.println(nuevoCliente);
+//		Persona nuevoEmpleado = fact.crearPersona(TipoPersona.EMPLEADO,
+//				new Empleado.Builder().nombrePer("Juan Perez").cedulaPer("1234567890").correo("juan.perez@example.com")
+//						.cargoEmpl("Gerente").cuentaBancariaEmpl("0123456789").usuarioEmpl("jperez")
+//						.contraseniaEmpl("password123"));
+//		System.out.println(nuevoEmpleado);
+		BaseDatosConexion dbConfig = BaseDatosConexion.getInstance();
 
-		Persona nuevoCliente = fact.crearPersona(TipoPersona.CLIENTE,
-				new Cliente.Builder().nombrePer("Juan Perez").cedulaPer("123456789").correo("juan.perez@example.com")
-						.telefonoCli("1234567890").direccionCli("Calle Falsa 123"));
-		System.out.println(nuevoCliente);
+		// Implementación del servicio
+		ServiciosEmpleadoImpl servicioCliente = new ServiciosEmpleadoImpl();
+		servicioCliente.setDbConfig(dbConfig);
+		System.out.println(servicioCliente.listarTodos());
 
 //    	 try {
 //             // Configuración de la base de datos
-//             BaseDatosConexion dbConfig = BaseDatosConexion.getInstance();
-//
-//             // Implementación del servicio
-//             ServiciosClienteImpl servicioCliente = new ServiciosClienteImpl();
-//             servicioCliente.setDbConfig(dbConfig);
+
 //
 //             // Crear un nuevo cliente
 //             Cliente nuevoCliente = new Cliente.Builder()

@@ -239,11 +239,7 @@ public class AddSala extends JFrame {
         int capacidadColumna = Integer.parseInt(textFieldCapacidadColumna.getText());
         int capacidadFila = Integer.parseInt(textFieldCapacidadFila.getText());
 
-        Sala sala = new Sala.Builder()
-            .nombreSala(nombre)
-            .capacidadColumnaSala(capacidadColumna)
-            .capacidadFilaSala(capacidadFila)
-            .build();
+        Sala sala = new Sala(0, nombre, capacidadColumna, capacidadFila);
 
         servicioSala.crear(sala);
         cargarSalas();
@@ -256,12 +252,7 @@ public class AddSala extends JFrame {
         int capacidadColumna = Integer.parseInt(textFieldCapacidadColumna.getText());
         int capacidadFila = Integer.parseInt(textFieldCapacidadFila.getText());
 
-        Sala sala = new Sala.Builder()
-            .idSala(id)
-            .nombreSala(nombre)
-            .capacidadColumnaSala(capacidadColumna)
-            .capacidadFilaSala(capacidadFila)
-            .build();
+        Sala sala = new Sala(id, nombre, capacidadColumna, capacidadFila);
 
         servicioSala.actualizar(sala);
         cargarSalas();

@@ -26,7 +26,7 @@ public class Cliente extends Persona {
 		return telefonoCli;
 	}
 
-	public static class Builder implements PersonaBuilder{
+	public static class Builder implements PersonaBuilder {
 		private int idPersona;
 		private String nombrePer;
 		private String cedulaPer;
@@ -69,6 +69,7 @@ public class Cliente extends Persona {
 			this.direccionCli = direccionCli;
 			return this;
 		}
+
 		@Override
 		public Cliente build() {
 			return new Cliente(this);
@@ -77,7 +78,7 @@ public class Cliente extends Persona {
 
 	@Override
 	public String toString() {
-		return super.toString()+" Cliente [idCliente=" + idCliente + ", direccionCli=" + direccionCli + ", telefonoCli=" + telefonoCli
-				+ "]";
+		return " Cliente [" + super.toString() + "idCliente=" + idCliente + ", direccionCli=" + direccionCli
+				+ ", telefonoCli=" + telefonoCli + "]";
 	}
 }

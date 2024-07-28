@@ -39,7 +39,7 @@ public class Empleado extends Persona {
 		this.contraseniaEmpl = builder.contraseniaEmpl;
 	}
 
-	public static class Builder implements PersonaBuilder{
+	public static class Builder implements PersonaBuilder {
 		private int idPersona;
 		private String nombrePer;
 		private String cedulaPer;
@@ -94,6 +94,7 @@ public class Empleado extends Persona {
 			this.contraseniaEmpl = contraseniaEmpl;
 			return this;
 		}
+
 		@Override
 		public Empleado build() {
 			return new Empleado(this);

@@ -1,6 +1,5 @@
 package com.cine.servicios;
 
-import java.sql.SQLException;
 import java.util.List;
 import com.cine.bean.Sala;
 import com.cine.conexionBaseDatos.BaseDatosConexion;
@@ -14,7 +13,7 @@ public interface ServicioSala {
 
 	public List<Sala> listarTodos();// R
 
-	public void crear(Object obj);// R
+	public void crear(Sala obj);// R
 
 	public void actualizar(Sala obj);// U
 

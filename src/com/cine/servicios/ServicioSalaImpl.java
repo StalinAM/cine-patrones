@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cine.bean.Sala;
-import com.cine.bean.Sala.Builder;
 import com.cine.conexionBaseDatos.BaseDatosConexion;
 
 public class ServicioSalaImpl implements ServicioSala {
@@ -19,18 +18,17 @@ public class ServicioSalaImpl implements ServicioSala {
 	}
 
 	@Override
-	public Sala buscarPorId(Integer id){
+	public Sala buscarPorId(Integer id) {
 		try (var con = dbConfig.getConnection()) {
 			var pstmt = con.prepareStatement(
 					"SELECT idSala, nombreSala, capacidadColumnaSala, capacidadFilaSala FROM Sala WHERE idSala = ?");
 			pstmt.setInt(1, id);
 			var rs = pstmt.executeQuery();
 			if (rs.next()) {
-				return new Sala.Builder().idSala(rs.getInt("idSala")).nombreSala(rs.getString("nombreSala"))
-						.capacidadColumnaSala(rs.getInt("capacidadColumnaSala"))
-						.capacidadFilaSala(rs.getInt("capacidadFilaSala")).build();
+				return new Sala(rs.getInt("idSala"), rs.getString("nombreSala"), rs.getInt("capacidadColumnaSala"),
+						rs.getInt("capacidadFilaSala"));
 			}
-			
+
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}
@@ -45,31 +43,30 @@ public class ServicioSalaImpl implements ServicioSala {
 					.prepareStatement("SELECT idSala, nombreSala, capacidadColumnaSala, capacidadFilaSala FROM Sala");
 			var rs = pstmt.executeQuery();
 			while (rs.next()) {
-				Sala sala = new Sala.Builder().idSala(rs.getInt("idSala")).nombreSala(rs.getString("nombreSala"))
-						.capacidadColumnaSala(rs.getInt("capacidadColumnaSala"))
-						.capacidadFilaSala(rs.getInt("capacidadFilaSala")).build();
+				Sala sala = new Sala(rs.getInt("idSala"), rs.getString("nombreSala"), rs.getInt("capacidadColumnaSala"),
+						rs.getInt("capacidadFilaSala"));
 				salas.add(sala);
 			}
 		} catch (Exception ex) {
-			  System.out.println(ex);
+			System.out.println(ex);
 		}
 		return salas;
 	}
 
 	@Override
-	public void crear(Object sala) {
+	public void crear(Sala sala) {
 		try (var con = dbConfig.getConnection()) {
 			con.setAutoCommit(false);
 			var pstmt = con.prepareStatement(
 					"INSERT INTO Sala (nombreSala, capacidadColumnaSala, capacidadFilaSala) VALUES (?, ?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
-			pstmt.setString(1, ((Builder) sala).build().getNombreSala());
-			pstmt.setInt(2, ((Builder) sala).build().getCapacidadColumnaSala());
-			pstmt.setInt(3, ((Builder) sala).build().getCapacidadFilaSala());
+			pstmt.setString(1, sala.getNombreSala());
+			pstmt.setInt(2, sala.getCapacidadColumnaSala());
+			pstmt.setInt(3, sala.getCapacidadFilaSala());
 			pstmt.executeUpdate();
 			var rs = pstmt.getGeneratedKeys();
 			if (rs.next()) {
-				((Builder) sala).idSala(rs.getInt(1));
+				sala.setIdSala(rs.getInt(1));
 			}
 			con.commit();
 		} catch (Exception ex) {
